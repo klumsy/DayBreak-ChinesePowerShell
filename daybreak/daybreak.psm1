@@ -32,7 +32,7 @@ if($条件) {
 #endregion
 
 #region Cmdlets aliases
-
+set-alias 言 write-host  
 #endregion
 
 #region verb and noun substitutions (with use proxy cmdlets for it) 
