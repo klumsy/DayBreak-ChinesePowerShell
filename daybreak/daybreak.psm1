@@ -38,6 +38,32 @@ else
  #TODO: make different parameter sets taking in bool and scriptblock
 }
 
+#simple while loop
+function 重复 ($做,$当)
+{
+ if (!($当 -is [scriptblock] ))
+ {
+   #"Only scriptblocks for the condition 当"
+   throw "条件'当'只接受脚本块."
+ }
+ Invoke-Expression ( "while($当)
+ {
+  $做
+ }")
+}
+
+#simple do-while loop
+function 先重复 ($做,$当=$false)
+{
+ if (!($当 -is [scriptblock] ))
+ {
+   #"Only scriptblocks for the condition 当"
+   throw "条件'当'只接受脚本块."
+ }
+ Invoke-Expression ( "do{
+  $做
+ }while($当)")
+}
 #endregion
 
 #region Cmdlets aliases
@@ -84,4 +110,9 @@ Set-Variable -Name 七 -Value 7 -Scope global -Option ReadOnly -Force
 Set-Variable -Name 八 -Value 8 -Scope global -Option ReadOnly -Force
 Set-Variable -Name 九 -Value 9 -Scope global -Option ReadOnly -Force
 Set-Variable -Name 十 -Value 10 -Scope global -Option ReadOnly -Force
+#endregion
+
+#region booleans
+Set-Variable -Name 真 -Value $true -Scope global -Option ReadOnly -Force
+Set-Variable -Name 假 -Value $true -Scope global -Option ReadOnly -Force
 #endregion
