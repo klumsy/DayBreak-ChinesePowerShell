@@ -72,9 +72,104 @@ set-alias 说 write-host  -Scope 'global'
 
 #region verb and noun substitutions (with use proxy cmdlets for it) 
 
+#region Measure-Object
+function 度量对象
+{
+[CmdletBinding(DefaultParameterSetName='GenericMeasure', HelpUri='http://go.microsoft.com/fwlink/?LinkID=113349', RemotingCapability='None')]
+param(
+    [Parameter(ValueFromPipeline=$true)]
+    [psobject]
+    ${输入对象},
+
+    [Parameter(Position=0)]
+    [ValidateNotNullOrEmpty()]
+    [string[]]
+    ${属性},
+
+    [Parameter(ParameterSetName='GenericMeasure')]
+    [switch]
+    ${总计},
+
+    [Parameter(ParameterSetName='GenericMeasure')]
+    [switch]
+    ${平均值},
+
+    [Parameter(ParameterSetName='GenericMeasure')]
+    [switch]
+    ${最大值},
+
+    [Parameter(ParameterSetName='GenericMeasure')]
+    [switch]
+    ${最小值},
+
+    [Parameter(ParameterSetName='TextMeasure')]
+    [switch]
+    ${行},
+
+    [Parameter(ParameterSetName='TextMeasure')]
+    [switch]
+    ${单词},
+
+    [Parameter(ParameterSetName='TextMeasure')]
+    [switch]
+    ${字符},
+
+    [Parameter(ParameterSetName='TextMeasure')]
+    [switch]
+    ${忽略白空格})
+
+begin
+{
+    try {
+        $outBuffer = $null
+        if ($PSBoundParameters.TryGetValue('OutBuffer', [ref]$outBuffer))
+        {
+            $PSBoundParameters['OutBuffer'] = 1
+        }
+        
+        # Resove PSBoundParameters
+        $PSBoundParameters = Resolve-PSBoundParameters -BoundParameters $PSBoundParameters -Cmdlet 'Measure-Object'
+
+        $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('Measure-Object', [System.Management.Automation.CommandTypes]::Cmdlet)
+        $scriptCmd = {& $wrappedCmd @PSBoundParameters }
+        $steppablePipeline = $scriptCmd.GetSteppablePipeline($myInvocation.CommandOrigin)
+        $steppablePipeline.Begin($PSCmdlet)
+    } catch {
+        throw
+    }
+}
+
+process
+{
+    try {
+        $steppablePipeline.Process($_)
+    } catch {
+        throw
+    }
+}
+
+end
+{
+    try {
+        $steppablePipeline.End()
+    } catch {
+        throw
+    }
+}
+<#
+
+.ForwardHelpTargetName Measure-Object
+.ForwardHelpCategory Cmdlet
+
+#>
+}
+#endregion
+
 #endregion
 
 #region number and other helpers , comparatives
+
+#region comparatives
 #this will have lots of comparisions build in eventually.
 
 function 比较
@@ -115,4 +210,53 @@ Set-Variable -Name 十 -Value 10 -Scope global -Option ReadOnly -Force
 #region booleans
 Set-Variable -Name 真 -Value $true -Scope global -Option ReadOnly -Force
 Set-Variable -Name 假 -Value $true -Scope global -Option ReadOnly -Force
+#endregion
+
+#region other helpers
+
+#Convert hashtable to readonly dictionary
+function ConvertTo-ReadOnlyDictionary([System.Collections.Hashtable]$Hashtable=@{})
+{
+    $dict=New-Object 'System.Collections.Generic.Dictionary[[string],[object]]'
+    $Hashtable.Keys.ForEach({$dict.Add($_,$Hashtable[$_])})
+    return [System.Collections.ObjectModel.ReadOnlyDictionary[[string],[object]]]$dict
+}
+
+#Replace the localized parameter name with original engligsh name
+function Resolve-PSBoundParameters($BoundParameters,$Cmdlet)
+{
+    $tempKeys = $BoundParameters.Keys.Where({$_ -in $LocalizedCmdletParameters.$Cmdlet.Keys})
+    #Write-Verbose ($BoundParameters | Out-String)
+    foreach($key in $tempKeys)
+    {
+          #add new key using english parameter name
+          $BoundParameters.Add($LocalizedCmdletParameters.$Cmdlet.$key,$BoundParameters.$key) | Out-Null
+          #remove old localized parameter name
+          $BoundParameters.Remove($key) | Out-Null
+    }
+    #Write-Verbose ($BoundParameters | Out-String)
+    return $BoundParameters
+}
+
+#Localized parameters for proxy Cmdlets
+Get-Variable -Name LocalizedCmdletParameters -ea SilentlyContinue | Remove-Variable
+New-Variable -Option Constant  -Name LocalizedCmdletParameters -Value (
+    ConvertTo-ReadOnlyDictionary -Hashtable @{
+     #Measure-Object
+        'Measure-Object' = ConvertTo-ReadOnlyDictionary -Hashtable @{
+            输入对象 = 'InputObject';
+            属性 = 'Property';
+            总计 = 'Sum';
+            平均值 = 'Average';
+            最大值 ='Maximum';
+            最小值 = 'Minimum';
+            行 = 'Line';
+            单词 = 'Word';
+            字符 ='Character';
+            忽略白空格 = 'IgnoreWhiteSpace'}
+    }
+)
+
+#endregion
+
 #endregion
