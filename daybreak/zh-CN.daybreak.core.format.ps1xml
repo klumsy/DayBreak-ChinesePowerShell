@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Microsoft.PowerShell.Commands.GenericMeasureInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.PowerShell.Commands.GenericMeasureInfo</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>个数</Label>
+                <ScriptBlock>$_.Count</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>平均值</Label>
+                <ScriptBlock>$_.Average</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>总计</Label>
+                <ScriptBlock>$_.Sum</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>最大值</Label>
+                <ScriptBlock>$_.Maximum</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>最小值</Label>
+                <ScriptBlock>$_.Minimum</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>属性</Label>
+                <ScriptBlock>$_.Property</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

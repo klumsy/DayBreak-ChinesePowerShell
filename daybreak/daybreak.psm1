@@ -260,3 +260,7 @@ New-Variable -Option Constant  -Name LocalizedCmdletParameters -Value (
 #endregion
 
 #endregion
+
+#region load custom format type data
+Update-FormatData -PrependPath "$PSScriptRoot\zh-CN.daybreak.core.format.ps1xml"
+#endregion
