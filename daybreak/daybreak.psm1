@@ -24,11 +24,9 @@
 . $PSScriptRoot\operators\comparisons.ps1
 #endregion
 
-#region numbers
+#region constants
 . $PSScriptRoot\constants\numbers.ps1
-#endregion
-
-#region booleans
+. $PSScriptRoot\constants\misc.ps1
 . $PSScriptRoot\constants\bool.ps1
 #endregion
 

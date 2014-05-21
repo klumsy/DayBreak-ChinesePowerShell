@@ -1,0 +1,1 @@
+﻿Set-Variable -Name 空 -Value $null -Scope global -Option ReadOnly -Force
