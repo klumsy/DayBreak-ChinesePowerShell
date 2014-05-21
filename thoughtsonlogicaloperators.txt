@@ -22,4 +22,7 @@ and (or x or y or z) and a and b
 all x and y and z ??
 any x or y and z?
 
-either (all (a,b,c)) and 
+either (all (a,b,c)) or x
+either (all a,b,c) -or (both x -and y) 
+either (all a,b,c) or (both x and y) 
+both x -and (any a,b,c)
