@@ -1,4 +1,5 @@
 ﻿#simple do-while loop
+# FIRST REPEAT 先重复 Xiān chóngfù DO $做 Zuò WHEN $当 Dāng
 function 先重复 ($做,$当={$false})
 {
  if (!($当 -is [scriptblock] ))

@@ -1,4 +1,5 @@
 ﻿#simple while loop
+# REPEAT 重复 Chóngfù DO $做 Zuò WHEN $当 Dāng
 function 重复 ($做,$当)
 {
  if (!($当 -is [scriptblock] ))
