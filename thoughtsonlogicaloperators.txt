@@ -1,0 +1,25 @@
+﻿#brainstorming logical comparisons given that we can't override operators, and can't do infix functions in PowerShell
+either x -or y
+either x or y
+both x -and y
+both x y
+both x and y
+
+all (x,y,z)
+any(x,y,z)
+
+either x -or {$expression}
+either {$expr1} -or {$expr2}
+both {$expr1} -and {$expr2}
+all {$expr1},{$expr2},y,z
+any {$expr1},{$expr2},y,z
+
+#using the validateset and multiple parameters not too unlike how Func<t,t1,t2,t3,t4,t5> happens in C#
+and x and y and z
+or x or y or z 
+and (or x or y or z) and a and b
+
+all x and y and z ??
+any x or y and z?
+
+either (all (a,b,c)) and 
