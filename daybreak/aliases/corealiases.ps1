@@ -1,0 +1,1 @@
+﻿set-alias 说 write-host  -Scope 'global'
