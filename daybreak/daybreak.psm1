@@ -22,6 +22,7 @@
 #region comparatives
 #this will have lots of comparisions build in eventually.
 . $PSScriptRoot\operators\comparisons.ps1
+. $PSScriptRoot\operators\logic.ps1
 #endregion
 
 #region constants
