@@ -59,7 +59,7 @@ function 非 # operator -not 'Fēi'
  if($args.Length -eq 0)
  {
   # Expression,boolean,or scriptblock required for arguments. 
-  Write-Error '参数需要指定表达式，布尔类型或者脚本块。' 
+  throw '参数需要指定表达式，布尔类型或者脚本块。' 
  }
  elseif($args.Length -eq 1)
  {
@@ -69,4 +69,30 @@ function 非 # operator -not 'Fēi'
  else{
    return $false
  }
+}
+
+<#
+.Synopsis
+   逻辑异或运算
+.DESCRIPTION
+   逻辑异或运算
+.EXAMPLE
+   异或 $真 $假
+   异或 $真 $假 $假 $真
+   异或 (比较 10 大于 3) {比较 3 小于 10}
+#>
+function 异或 # operator -xor 'Yì huò'
+{
+ if($args.Length -lt 2)
+ {
+  # at least 2 expressions,boolean,or scriptblocks required for arguments. 
+  throw '参数需要指定至少两个表达式，布尔类型或者脚本块。' 
+ }
+ $condition=$args[0]
+ foreach ($expr in $args[1..($args.Length-1)])
+ {
+    if($expr -is [scriptblock]) {$expr = & $expr}
+    $condition = $condition -xor $expr
+ }
+ $condition
 }
