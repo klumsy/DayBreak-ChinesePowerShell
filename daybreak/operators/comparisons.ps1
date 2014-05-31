@@ -25,3 +25,33 @@
    default { return '其它的条件运算暂不支持.'} # other comparisions not yet supported
  }
 }
+
+<#
+.Synopsis
+   替换指定元素的值
+.DESCRIPTION
+   替换指定元素的值
+.EXAMPLE
+   替换 -源 $三,$四,$五 -中的 $四 -为 $六
+   替换 $三,$四,$五 $四 $六
+   替换 $三,$四,$五 $四,$六
+   替换 $三,$四,$五 $四
+#>
+function 替换 # -repalce operator ( Tìhuàn ) 
+{  
+  param(
+  [Parameter(ValueFromPipeline=$true)]
+  $源=$null,
+  [Parameter(Mandatory=$true)]
+  $中的,
+  $为=$null
+  )
+  # Keep compatible for syntax : Replace $source $oldValue,$newValue
+  if( (-not $为) -and ($中的.length -eq 2) )
+  {
+    $为 = $中的[1]
+    $中的 = $中的[0]
+  }
+  return $源 -replace $中的,$为
+} 
+

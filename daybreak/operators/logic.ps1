@@ -77,9 +77,10 @@ function 非 # operator -not 'Fēi'
 .DESCRIPTION
    逻辑异或运算
 .EXAMPLE
-   异或 $真 $假
-   异或 $真 $假 $假 $真
-   异或 (比较 10 大于 3) {比较 3 小于 10}
+   替换 -源 3,4,5 -中的 4 -为 6
+   替换 3,4,5 4 6
+   替换 3,4,5 4,6
+   替换 3,4,5 4
 #>
 function 异或 # operator -xor 'Yì huò'
 {
